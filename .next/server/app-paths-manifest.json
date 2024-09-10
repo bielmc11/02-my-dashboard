@@ -1,3 +1,6 @@
 {
-  "/dashboard/count/page": "app/dashboard/count/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/page": "app/page.js",
+  "/dashboard/count/page": "app/dashboard/count/page.js",
+  "/dashboard/main/page": "app/dashboard/main/page.js"
 }
