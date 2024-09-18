@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { specificPokemon } from "../../../pokemons";
 import Link from "next/link";
-import {  IoHeartOutline } from "react-icons/io5";
+import { IoHeartOutline } from "react-icons/io5";
 
 interface Props {
   id: string;
@@ -40,6 +40,7 @@ export const PokemonCard = async ({ id, name }: Props) => {
           height={100}
         />
       </div> */}
+
       <div className="bg-white rounded overflow-hidden shadow-lg">
         <div className="text-center p-6 bg-gray-800 border-b flex flex-col items-center">
           <Image
@@ -47,14 +48,17 @@ export const PokemonCard = async ({ id, name }: Props) => {
             alt={pokemonName ?? "Imagen del pokemon"}
             width={100}
             height={100}
-            // priority={ false }
+            priority={false}
           />
           <p className="pt-2 text-lg font-semibold text-gray-50 uppercase">
-            
             {pokemonName}
           </p>
           <div className="mt-5">
-            <Link prefetch={true} href={`/pokemon/${id}`} className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100">
+            <Link
+              prefetch={true}
+              href={`/pokemon/${id}`}
+              className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100"
+            >
               Mas informacion
             </Link>
           </div>
@@ -65,7 +69,7 @@ export const PokemonCard = async ({ id, name }: Props) => {
             className="px-4 py-2 hover:bg-gray-100 flex items-center"
           >
             <div className="text-red-600">
-              <IoHeartOutline/>
+              <IoHeartOutline />
             </div>
             <div className="pl-3">
               <p className="text-sm font-medium text-gray-800 leading-none">
