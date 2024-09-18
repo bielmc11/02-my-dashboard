@@ -1,4 +1,6 @@
+import { PokemonCard } from "@/app/components";
 import { PokemonsResponse, SimplePokemons } from "@/app/pokemons";
+import { PokemonsGrid } from "./components/PokemonsGrid";
 
 const getPokemons = async (
   limit = 20,
@@ -32,9 +34,11 @@ export default async function PokemonPage() {
   const pokemons = await getPokemons();
 
   return (
-    <div className="relative">
-      <h1>Pokemons</h1>
-      <div>{JSON.stringify(pokemons)}</div>
+    <div className="relative flex flex-col items-center">
+      <h2 className="text-4xl mt-4 font-bold mb-10">
+        Lista de Pokemons <span className="text-green-700">Estatica</span>
+      </h2>
+      <PokemonsGrid pokemons={pokemons} />
     </div>
   );
 }
