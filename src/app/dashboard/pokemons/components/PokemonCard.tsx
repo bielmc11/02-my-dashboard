@@ -31,16 +31,6 @@ export const PokemonCard = async ({ id, name }: Props) => {
   const linkImagen = pokemon?.sprites?.other?.dream_world?.front_default;
   return (
     <div className="mx-auto right-0 mt-2 w-60 h-full">
-      {/* <div className="px-4 py-3">
-        <p>{unaCosa}</p>
-        <Image
-          src={linkImagen ?? ""}
-          alt={unaCosa ?? "Imagen del pokemon"}
-          width={100}
-          height={100}
-        />
-      </div> */}
-
       <div className="bg-white rounded overflow-hidden shadow-lg">
         <div className="text-center p-6 bg-gray-800 border-b flex flex-col items-center">
           <Image
@@ -55,7 +45,6 @@ export const PokemonCard = async ({ id, name }: Props) => {
           </p>
           <div className="mt-5">
             <Link
-              prefetch={true}
               href={`/pokemon/${id}`}
               className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100"
             >

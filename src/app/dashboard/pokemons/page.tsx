@@ -6,7 +6,7 @@ const getPokemons = async (
   limit = 20,
   offset = 0
 ): Promise<SimplePokemons[]> => {
-  try {
+    //lanzar un error aqui debajo a ver que hace y si redirige a error.tsx, pude que tenga que quitar el try
     const response = await fetch(
       `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
     );
@@ -14,6 +14,8 @@ const getPokemons = async (
     if (!response.ok) {
       throw new Error("Error en la petición");
     }
+
+    throw new Error("Error en la petición");
 
     const data: PokemonsResponse = await response.json();
 
@@ -24,10 +26,7 @@ const getPokemons = async (
       };
     });
     return mapedData;
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
+
 };
 
 export default async function PokemonPage() {
