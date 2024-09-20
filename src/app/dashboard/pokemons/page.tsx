@@ -1,32 +1,31 @@
-import { PokemonCard } from "@/app/components";
-import { PokemonsResponse, SimplePokemons } from "@/app/pokemons";
-import { PokemonsGrid } from "./components/PokemonsGrid";
+import { PokemonsResponse, SimplePokemons } from "@/pokemons";
+import { PokemonsGrid } from "@/pokemons";
 
 const getPokemons = async (
   limit = 20,
   offset = 0
 ): Promise<SimplePokemons[]> => {
-    //lanzar un error aqui debajo a ver que hace y si redirige a error.tsx, pude que tenga que quitar el try
-    const response = await fetch(
-      `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
-    );
+  // TODO EXTRAER EN UNA CARPETA SERVICES ESTA LLAMADA A LA API Y OTRAS
+  const response = await fetch(
+    `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
+  );
 
-    if (!response.ok) {
-      throw new Error("Error en la petición");
-    }
-
+  if (!response.ok) {
     throw new Error("Error en la petición");
+  }
 
-    const data: PokemonsResponse = await response.json();
+  //Error forzado para comprobar desvio a error.tsx
+  //throw new Error("Error en la petición");
 
-    const mapedData = data.results.map((pokemon) => {
-      return {
-        id: pokemon.url.split("/").at(-2) as string,
-        name: pokemon.name,
-      };
-    });
-    return mapedData;
+  const data: PokemonsResponse = await response.json();
 
+  const mapedData = data.results.map((pokemon) => {
+    return {
+      id: pokemon.url.split("/").at(-2) as string,
+      name: pokemon.name,
+    };
+  });
+  return mapedData;
 };
 
 export default async function PokemonPage() {
