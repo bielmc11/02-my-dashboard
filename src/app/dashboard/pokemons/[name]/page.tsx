@@ -5,6 +5,7 @@
 import { Pokemon } from "@/pokemons/interfaces/pokemons";
 import { Metadata } from "next";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 interface PropsParams {
   name: string;
@@ -16,26 +17,38 @@ interface Props {
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
-  const pokemon = await fetch(
-    `https://pokeapi.co/api/v2/pokemon/${props.params.name}`
-  );
 
-  //TODO MANEJO DE ERRORES
-  //! AUNQUE IGUAL NO HAY QUE MANEJARLO SI LO ENVIA DIRECTAMENTE A LA PAGINA DE ERROR
-  return {
-    title: props.params.name,
-    description: `Pagina de Pokemon ${props.params.name}`,
-  };
-}
+  try{
+    const pokemon = await fetch(
+      `https://pokeapi.co/api/v2/pokemon/${props.params.name}`
+    );
+    //TODO MANEJO DE ERRORES
+    //! AUNQUE IGUAL NO HAY QUE MANEJARLO SI LO ENVIA DIRECTAMENTE A LA PAGINA DE ERROR
+    return {
+      title: props.params.name,
+      description: `Pagina de Pokemon ${props.params.name}`,
+    };
+  }catch{
+    return {
+      title: "Error",
+      description: "Error en la petición",
+    }
+  }
+
+  }
 
 const getPokemon = async (name: string): Promise<Pokemon> => {
   //FINGO EL COMPORTAMIENTO DE UN RETRASO EN LA PROMESA
   //await new Promise((resolve) => setTimeout(resolve, 5000));
 
-  const myPokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-  const data = await myPokemon.json();
+  try{
+    const myPokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+    const data = await myPokemon.json();
+    return data;
+  } catch{
+    notFound();
+  }
 
-  return data;
 };
 
 // TODO PUEDO HACER LA LLAMADA AQUI EN EL SERVIDOR PERO NO SE HACER EL LOANDING
