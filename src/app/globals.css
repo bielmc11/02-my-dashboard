@@ -19,9 +19,25 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+.demo{
+  view-transition-name: demo-image;
+}
+
+.demo2{
+  view-transition-name: demo22;
+}
+
+.demo3{
+  view-transition-name: demo33;
+}
+
+@view-transition {
+  navigation: auto;
+}
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
+

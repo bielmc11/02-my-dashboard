@@ -29,8 +29,18 @@ export const PokemonCard = async ({ id, name }: Props) => {
   const pokemon = await getPokemon(name);
   const pokemonName = pokemon?.name;
   const linkImagen = pokemon?.sprites?.other?.dream_world?.front_default;
+    
+  /* const handleImageCkick = () => {
+    if(!document?.startViewTransition){
+      console.log("No soporta startViewTransition")
+    }else{
+      console.log("entro")
+    }
+  } */
+
+
   return (
-    <div className="mx-auto right-0 mt-2 w-60 h-full">
+    <div className="itemPokemon mx-auto right-0 mt-2 w-60 h-full">
       <div className="bg-white rounded overflow-hidden shadow-lg">
         <div className="text-center p-6 bg-gray-800 border-b flex flex-col items-center">
           <Image

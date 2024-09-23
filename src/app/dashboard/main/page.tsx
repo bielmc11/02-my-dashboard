@@ -1,44 +1,68 @@
 "use client";
+import { Link, useTransitionRouter } from "next-view-transitions";
 
-import { useCallback, useEffect, useState } from "react";
+function slideInOut() {
+  document.documentElement.animate(
+    [
+      {
+        opacity: 1,
+        transform: "translate(0, 0)",
+      },
+      {
+        opacity: 0,
+        transform: "translate(-100px, 0)",
+      },
+    ],
+    {
+      duration: 400,
+      easing: "ease",
+      fill: "forwards",
+      pseudoElement: "::view-transition-old(root)",
+    }
+  );
+
+  document.documentElement.animate(
+    [
+      {
+        opacity: 0,
+        transform: "translate(100px, 0)",
+      },
+      {
+        opacity: 1,
+        transform: "translate(0, 0)",
+      },
+    ],
+    {
+      duration: 400,
+      easing: "ease",
+      fill: "forwards",
+      pseudoElement: "::view-transition-new(root)",
+    }
+  );
+}
 
 export default function MainPage() {
-  const [myScroll, setMyScroll] = useState<boolean>(false);
-
-  const handleScroll = useCallback(() => {
-    const scrollTop = window.scrollY;
-    const scrollyOffset = window.scrollY;
-    console.log("scrollTop", scrollTop);
-    console.log("scrollyOffset", scrollyOffset);
-    if (scrollTop > 10) {
-      setMyScroll(true);
-    } else {
-      setMyScroll(false);
-    }
-    //setMyScroll(window.scrollY > 100);
-    console.log("scrollTop", scrollTop);
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    console.log("El valor de myScroll ha cambiado:", myScroll);
-  }, [myScroll]); // Monitorea cambios en myScroll
+  const router = useTransitionRouter();
 
   return (
     <div className="flex flex-col">
       <h1>Hello Page</h1>
-      {myScroll ? (
-        <p className="text-6xl">Scrolled</p>
-      ) : (
-        <p className="text-6xl pt-32">Not Scrolled</p>
-      )}
+      <p className="text-3xl demo3">Scrolled</p>
+      <Link href="/dashboard/count">VIAJE A COUNT </Link>
+
+      <a
+        onClick={(e) => {
+          e.preventDefault();
+          router.push("/dashboard/count", {
+            // Optional custom transition
+            onTransitionReady: slideInOut,
+          });
+        }}
+        href="/dashboard/count"
+        className="text-4xl pt-32 demo4"
+      >
+        Not Scrolled
+      </a>
 
       <div className="flex flex-col gap-4 mt-[1000px]">
         <div className="bg-red-400 w-40 h-40"></div>
