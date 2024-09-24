@@ -30,13 +30,6 @@ export const PokemonCard = async ({ id, name }: Props) => {
   const pokemonName = pokemon?.name;
   const linkImagen = pokemon?.sprites?.other?.dream_world?.front_default;
     
-  /* const handleImageCkick = () => {
-    if(!document?.startViewTransition){
-      console.log("No soporta startViewTransition")
-    }else{
-      console.log("entro")
-    }
-  } */
 
 
   return (
