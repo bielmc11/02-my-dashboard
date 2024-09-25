@@ -1,27 +1,35 @@
-
 // ESTE COMPONENTE ESTA EN SERVIDOR, EL LOANDING SE VA A loanding.tsx
 // Podria hacer el componente 'use client' con el hook useGetSpecificPokemon.tsx
 // Mirar la diferencia entre crear las paginas dinamicas: las 151 a la vez al renderizar la pagina o segun se van demandando.
 // Tambien mirar como denegar accesos y reenviar a not founds segun el metodo escogido
+import { PokemonsResponse } from "@/pokemons";
 import { Pokemon } from "@/pokemons/interfaces/pokemons";
-import { style } from "framer-motion/client";
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import misEstilos from "./misEstilos.module.css";
 
 interface PropsParams {
   name: string;
 }
-
 interface Props {
   params: PropsParams;
   searchParams: any;
 }
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
+export async function generateStaticParams() {
+  const response : PokemonsResponse = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`)
+    .then(res => res.json())
 
-  try{
+
+  return response.results.map((pokemon) => {
+    return {
+      name: pokemon.name,
+    };
+  });
+}
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  try {
     const pokemon = await fetch(
       `https://pokeapi.co/api/v2/pokemon/${props.params.name}`
     );
@@ -31,34 +39,35 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       title: props.params.name,
       description: `Pagina de Pokemon ${props.params.name}`,
     };
-  }catch{
+  } catch {
     return {
       title: "Error",
       description: "Error en la petición",
-    }
+    };
   }
-
-  }
+}
 
 const getPokemon = async (name: string): Promise<Pokemon> => {
   //FINGO EL COMPORTAMIENTO DE UN RETRASO EN LA PROMESA
   //await new Promise((resolve) => setTimeout(resolve, 5000));
-  try{
-    const myPokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+  try {
+    const myPokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`, {
+      next: {
+        revalidate: 60 * 60 * 30 * 3, //revalidate cada 3 meses creo
+      },
+    });
     const data = await myPokemon.json();
     return data;
-  } catch{
+  } catch {
     notFound();
   }
-  
 };
 
 // TODO PUEDO HACER LA LLAMADA AQUI EN EL SERVIDOR PERO NO SE HACER EL LOANDING
 export default async function PokemonViewPage(props: Props) {
-  const pokemon = await getPokemon(props.params.name);
+  console.log("el nombre es:", props);
 
-  console.log('en el new el id es ', pokemon.id)
-  
+  const pokemon = await getPokemon(props.params.name);
   return (
     <div className="flex mt-5 flex-col items-center text-slate-800">
       <div className="relative flex flex-col items-center rounded-[20px] w-[700px] mx-auto bg-white bg-clip-border  shadow-lg  p-3">
@@ -72,9 +81,7 @@ export default async function PokemonViewPage(props: Props) {
               width={150}
               height={150}
               alt={`Imagen del pokemon ${pokemon.name}`}
-              className={misEstilos.detailImage}
-              style={{viewTransitionName:`image-${pokemon.id}`}}
-             
+              style={{ viewTransitionName: `image-${pokemon.id}` }}
             />
 
             <div className="flex flex-wrap">
@@ -86,7 +93,7 @@ export default async function PokemonViewPage(props: Props) {
             </div>
           </div>
         </div>
-      
+
         <div className="grid grid-cols-2 gap-4 px-2 w-full">
           <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4  drop-shadow-lg ">
             <p className="text-sm text-gray-600">Types</p>
