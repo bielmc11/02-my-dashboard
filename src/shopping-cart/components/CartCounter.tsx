@@ -1,42 +1,47 @@
 'use client'
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/hooks/useStore";
+import { decrement, increment, initCounterSate } from "@/store/counter/slice";
+import { useEffect } from "react";
 
 interface Props {
   value?: number
 }
 
 export function CartCounter({ value = 0 }: Props) {
-  const [count, setCount] = useState(value);
+  const myValue = useAppSelector((state) => state.counter.value);
+  const dispatch = useAppDispatch()
 
 
-
-  const increment = () => {
-    setCount(count + 1);
+  useEffect(()=>{
+    dispatch(initCounterSate(value))
+  },[])
+  const aumentar = () => {
+    dispatch(increment())
   };
 
-  const decrement = () => {
-    setCount(count - 1);
+  const restar = () => {
+    dispatch(decrement())
   };
 
   return (
     <div className="flex flex-col items-center justify-center ">
-      <span className="text-9xl">{count}</span>
+      <span className="text-9xl">{myValue}</span>
       <div>
         <button
           onClick={() => {
-            increment();
-          }}
-          className="rounded bg-blue-400 hover:bg-blue-900 hover:text-white p-2 transition-all w-[90px] mr-2"
-        >
-          +1
-        </button>
-        <button
-          onClick={() => {
-            decrement();
+            restar();
           }}
           className="rounded bg-blue-400 hover:bg-blue-900 hover:text-white p-2 transition-all w-[90px]"
         >
           -1
+        </button>
+        <button
+          onClick={() => {
+            aumentar();
+          }}
+          className="rounded bg-blue-400 hover:bg-blue-900 hover:text-white p-2 transition-all w-[90px] ml-2"
+        >
+          +1
         </button>
       </div>
     </div>
