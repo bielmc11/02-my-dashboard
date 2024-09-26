@@ -4,6 +4,7 @@ import {
   IoBrowsersOutline,
   IoCalculator,
   IoFootball,
+  IoHeartOutline,
   IoLogoReact,
 } from "react-icons/io5";
 import { SidebarMenuItem } from "./SidebarMenuItem";
@@ -11,21 +12,27 @@ import { SidebarMenuItem } from "./SidebarMenuItem";
 const menuItems = [
   {
     path: "/dashboard/main",
-    icon: <IoBrowsersOutline size={35} />,
+    icon: <IoBrowsersOutline size={30} />,
     tittle: "Dashboard",
     subTittle: "Visualiación",
   },
   {
     path: "/dashboard/count",
-    icon: <IoCalculator size={35} />,
+    icon: <IoCalculator size={30} />,
     tittle: "Counter",
     subTittle: "Counter Client Side",
   },
   {
     path: "/dashboard/pokemons",
-    icon: <IoFootball size={35} />,
+    icon: <IoFootball size={30} />,
     tittle: "Poekmons",
-    subTittle: "Generacion estatica",
+    subTittle: "Generacion incremental estatica",
+  },
+  {
+    path: "/dashboard/favorites",
+    icon: <IoHeartOutline size={30} />,
+    tittle: "Poekmons",
+    subTittle: "Estado global de favoritos",
   },
 ];
 
