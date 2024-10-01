@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { specificPokemon } from "..";
+
+import {  FavoriteButton, specificPokemon } from "..";
 import Link from "next/link";
-import { IoHeartOutline } from "react-icons/io5";
 
 interface Props {
   id: string;
@@ -29,8 +29,6 @@ export const PokemonCard = async ({ id, name }: Props) => {
   const pokemon = await getPokemon(name);
   const pokemonName = pokemon?.name;
   const linkImagen = pokemon?.sprites?.other?.dream_world?.front_default;
-    
-
 
   return (
     <div className="itemPokemon mx-auto right-0 mt-2 w-60 h-full">
@@ -55,22 +53,7 @@ export const PokemonCard = async ({ id, name }: Props) => {
             </Link>
           </div>
         </div>
-        <div className="border-b">
-          <Link
-            href="/dashboard/main" /* Hay que cambiar esto */
-            className="px-4 py-2 hover:bg-gray-100 flex items-center"
-          >
-            <div className="text-red-600">
-              <IoHeartOutline />
-            </div>
-            <div className="pl-3">
-              <p className="text-sm font-medium text-gray-800 leading-none">
-                No es favorito
-              </p>
-              <p className="text-xs text-gray-500">View your last donations</p>
-            </div>
-          </Link>
-        </div>
+        <FavoriteButton id={id} name={name} />
       </div>
     </div>
   );
