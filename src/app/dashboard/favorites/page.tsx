@@ -1,6 +1,6 @@
 'use client'
 import { useAppSelector } from "@/hooks/useStore";
-import { FavoritePokemons } from "@/pokemons/components/favoritePokemons";
+import { FavoritePokemons } from "@/pokemons/components/FavoritePokemons";
 import React from "react";
 //Igual tendria que llamar a un componente que llamase a simpelWidget y hacer ese componente use client con el map y la llamada al state...
 
