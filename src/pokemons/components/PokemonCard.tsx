@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import {  FavoriteButton, specificPokemon } from "..";
+import { FavoriteButton } from "..";
 import Link from "next/link";
 
 interface Props {
@@ -8,41 +8,20 @@ interface Props {
   name: string;
 }
 
-const getPokemon = async (
-  name: string
-): Promise<specificPokemon | undefined> => {
-  try {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-    if (!response.ok) {
-      throw new Error("Error en la petición");
-    }
-    //Deberia mapearlo
-    const data = response.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-    return;
-  }
-};
-
-export const PokemonCard = async ({ id, name }: Props) => {
-  const pokemon = await getPokemon(name);
-  const pokemonName = pokemon?.name;
-  const linkImagen = pokemon?.sprites?.other?.dream_world?.front_default;
-
+export const PokemonCard = ({ id, name }: Props) => {
   return (
-    <div className="itemPokemon mx-auto right-0 mt-2 w-60 h-full">
+    <div className="itemPokemon right-0 w-60 min-h-[300px]">
       <div className="bg-white rounded overflow-hidden shadow-lg">
-        <div className="text-center p-6 bg-gray-800 border-b flex flex-col items-center">
+        <div className="text-center p-6 bg-gray-800 border-b flex flex-col items-center min-h-[250px]">
           <Image
-            src={linkImagen ?? ""}
-            alt={pokemonName ?? "Imagen del pokemon"}
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`}
+            alt={name}
             width={100}
             height={100}
             priority={false}
           />
           <p className="pt-2 text-lg font-semibold text-gray-50 uppercase">
-            {pokemonName}
+            {name}
           </p>
           <div className="mt-5">
             <Link
