@@ -10,8 +10,8 @@ interface PokemonState {
 const initialState = (): PokemonState => {
   if (typeof window !== "undefined") {
     console.log("windoooooooooooooooooooooooooooooooooooooooooooooow");
-    return localStorage.getItem("pokemons")
-      ? JSON.parse(localStorage.getItem("pokemons")!)
+    return localStorage.getItem("pokemonsFav")
+      ? JSON.parse(localStorage.getItem("pokemonsFav")!)
       : {};
   } else {
     console.log("noooooooooooooooooooooooooooooooooooooooooooooooooo window");
@@ -30,11 +30,9 @@ const slice = createSlice({
     addPokemon: (state, action: PayloadAction<SimplePokemons>) => {
       const { id } = action.payload;
       state[id] = action.payload;
-      localStorage.setItem("pokemons", JSON.stringify(state));
     },
     deletePokemon: (state, action: PayloadAction<string>) => {
       delete state[action.payload];
-      localStorage.setItem("pokemons", JSON.stringify(state));
     },
   },
 });
